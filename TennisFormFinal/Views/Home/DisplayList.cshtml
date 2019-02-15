@@ -1,0 +1,39 @@
+﻿@model TennisReservationViewModel
+
+<p>
+    <a asp-action="ReservationForm">Create New</a><br />
+    @using (Html.BeginForm("DisplayList", "Home", FormMethod.Post))
+    {
+        @Html.DropDownListFor(model=> model.PageInfo.FilterString, new SelectList(new string[] { "","Erba alta 1", "Erba alta 2", "Terra battuta", "Sintetico" },
+                         ""))
+
+        <input type="date" asp-for="PageInfo.FilterDate" value="" />
+
+        <input type="submit" value="Filtra" />
+    }
+
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.reservations.First().FieldName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reservations.First().ReservationTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reservations.First().MatchType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.reservations)
+        {
+            @Html.Partial("ReservationSummary", item)
+        }
+    </tbody>
+</table>
